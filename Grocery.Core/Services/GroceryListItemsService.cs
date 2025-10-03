@@ -49,6 +49,15 @@ namespace Grocery.Core.Services
             return _groceriesRepository.Update(item);
         }
 
+        private List<BestSellingProducts> SortBestSellingProducts(List<BestSellingProducts> bestSellingProducts)
+        {
+            return [.. bestSellingProducts
+                .Select((p, index) =>
+                {
+                    p.Ranking = index + 1;
+                    return p;
+                })];
+        }
         public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
         {
             var groceryItems = _groceriesRepository.GetAll();
@@ -58,6 +67,7 @@ namespace Grocery.Core.Services
                 .Select(group =>
                 {
                     var product = _productRepository.Get(group.Key);
+                    // add without sorting
                     return new BestSellingProducts(
                         group.Key,
                         product?.Name ?? "Unknown",
@@ -70,15 +80,8 @@ namespace Grocery.Core.Services
                 .Take(topX)
                 .ToList();
 
-            List<BestSellingProducts> rankedProducts = bestSellingProducts
-                .Select((p, index) =>
-                {
-                    p.Ranking = index + 1;
-                    return p;
-                })
-                .ToList();
-
-            return rankedProducts;
+            // sort the products and return them
+            return SortBestSellingProducts(bestSellingProducts);
         }
         private void FillService(List<GroceryListItem> groceryListItems)
         {
