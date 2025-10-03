@@ -18,32 +18,7 @@ namespace Grocery.Core.Services
             _clientRepository=clientRepository;
             _productRepository=productRepository;
         }
-        //public List<BoughtProducts> Get(int? productId)
-        //{
 
-        //    if (productId is null) return [];
-
-        //    Product? product = _productRepository.Get((int)productId);
-
-        //    List<GroceryListItem> groceryListItems = [.. _groceryListItemsRepository.GetAll().Where(p => p.ProductId == productId)];
-
-        //    if (groceryListItems.Count == 0 || product is null) return [];
-
-        //    List<BoughtProducts> boughtProductsList = [];
-        //    GroceryList? groceryList;
-        //    Client? client;
-
-        //    foreach (GroceryListItem groceryListItem in groceryListItems)
-        //    {
-
-        //        groceryList = _groceryListRepository.Get(groceryListItem.GroceryListId);
-        //        if (groceryList is null) continue;
-        //        client = _clientRepository.Get(groceryList.ClientId);
-        //        if (client is null) continue;
-        //        boughtProductsList.Add(new BoughtProducts(client, groceryList, product));
-        //    }
-        //    return boughtProductsList;
-        //}
         public List<BoughtProducts> Get(int? productId)
         {
             if (productId is null) return [];
